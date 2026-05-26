@@ -4,7 +4,7 @@ A small data project built around a simple question:
 
 > *On a furniture-rental subscription, when do customers cancel — and can we predict who will, in time to do something about it?*
 
-Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 made-up subscribers, 12 monthly groups (January to December 2024), tracked through May 2026.
+Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 simulated subscribers, 12 monthly cohorts (January to December 2024), tracked through May 2026.
 
 ---
 

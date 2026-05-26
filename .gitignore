@@ -7,6 +7,7 @@ venv/
 .DS_Store
 .vscode/
 .idea/
-.claude/
 _make_notebook.py
 HANDOFF.md
+RetainIQ Deep Dive.docx
+_md_to_docx.py
