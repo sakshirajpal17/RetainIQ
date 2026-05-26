@@ -3,377 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RetainIQ — Subscription Churn & LTV Cohort Model</title>
-<meta name="description" content="Subscription churn & LTV cohort model for a D2C furniture-rental business — 12K subscribers, cohort retention curves, logistic-regression churn classifier with 78% precision.">
+<title>RetainIQ — Dashboard & Outputs</title>
 <style>
-  :root{
-    --primary:#E84545;
-    --ink:#0F172A;
-    --muted:#64748B;
-    --teal:#0E9F8F;
-    --amber:#F59E0B;
-    --bg:#FFFFFF;
-    --light:#F8FAFC;
-    --border:#E2E8F0;
-  }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
   body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    color:var(--ink);
-    background:var(--bg);
-    line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    color:#0F172A;background:#FFFFFF;line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
-  .container{max-width:1180px;margin:0 auto;padding:0 24px}
-  header{
-    padding:64px 0 48px;
-    border-bottom:1px solid var(--border);
-  }
-  .tag{
-    display:inline-block;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--primary);
-    margin-bottom:16px;
-  }
+  .container{max-width:1180px;margin:0 auto;padding:40px 24px 64px}
   h1{
-    font-size:42px;
-    line-height:1.15;
-    font-weight:800;
-    letter-spacing:-0.02em;
-    margin-bottom:16px;
+    font-size:28px;font-weight:800;letter-spacing:-0.01em;margin-bottom:6px;
   }
-  .subtitle{
-    font-size:18px;
-    color:var(--muted);
-    max-width:760px;
-  }
-  .quote{
-    font-style:italic;
-    font-size:17px;
-    color:var(--ink);
-    border-left:3px solid var(--primary);
-    padding:8px 0 8px 18px;
-    margin-top:28px;
-    max-width:760px;
-  }
-  .meta{
-    margin-top:32px;
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    font-size:14px;
-    color:var(--muted);
-  }
-  .meta a{color:var(--primary);text-decoration:none;font-weight:600}
-  .meta a:hover{text-decoration:underline}
-
-  section{padding:56px 0;border-bottom:1px solid var(--border)}
-  section:last-of-type{border-bottom:none}
-  h2{
-    font-size:14px;
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:24px;
-  }
-  h3{
-    font-size:20px;
-    font-weight:700;
-    margin-bottom:8px;
-  }
-
-  /* KPI cards */
-  .kpis{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:8px;
-  }
-  .kpi{
-    background:var(--light);
-    border-radius:12px;
-    padding:24px 20px;
-    text-align:center;
-  }
-  .kpi-label{
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:10px;
-  }
-  .kpi-value{
-    font-size:32px;
-    font-weight:800;
-    letter-spacing:-0.02em;
-    line-height:1;
-    margin-bottom:8px;
-  }
-  .kpi-sub{font-size:12px;color:var(--muted)}
-  .kpi-1 .kpi-value{color:var(--ink)}
-  .kpi-2 .kpi-value{color:var(--primary)}
-  .kpi-3 .kpi-value{color:var(--teal)}
-  .kpi-4 .kpi-value{color:var(--amber)}
-
-  /* Dashboard image */
-  .dashboard-wrap{
-    margin-top:16px;
-    border-radius:12px;
-    overflow:hidden;
-    border:1px solid var(--border);
+  .sub{color:#64748B;font-size:15px;margin-bottom:32px}
+  .sub a{color:#E84545;text-decoration:none;font-weight:600}
+  .sub a:hover{text-decoration:underline}
+  .dashboard{
+    border:1px solid #E2E8F0;border-radius:12px;overflow:hidden;
     box-shadow:0 4px 24px rgba(15,23,42,0.06);
   }
-  .dashboard-wrap img{width:100%;display:block}
-
-  /* Findings */
-  .findings{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:24px;
-  }
-  .finding{
-    background:var(--light);
-    border-radius:12px;
-    padding:24px;
-    border-left:3px solid var(--primary);
-  }
-  .finding-num{
-    display:inline-block;
-    font-size:12px;
-    font-weight:700;
-    color:var(--primary);
-    margin-bottom:4px;
-  }
-  .finding h3{font-size:17px;margin-bottom:8px}
-  .finding p{color:var(--muted);font-size:14px}
-
-  /* Downloads */
+  .dashboard img{width:100%;display:block}
   .downloads{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+    margin-top:24px;
   }
   .download{
-    display:block;
-    background:var(--light);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:24px;
-    text-decoration:none;
-    color:var(--ink);
-    transition:border-color 0.15s, transform 0.15s;
+    display:block;background:#F8FAFC;border:1px solid #E2E8F0;
+    border-radius:10px;padding:18px 20px;text-decoration:none;color:#0F172A;
+    transition:border-color 0.15s,transform 0.15s;
   }
-  .download:hover{
-    border-color:var(--primary);
-    transform:translateY(-2px);
-  }
+  .download:hover{border-color:#E84545;transform:translateY(-1px)}
   .download-type{
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1px;
-    color:var(--primary);
-    margin-bottom:8px;
+    font-size:11px;font-weight:700;letter-spacing:1px;color:#E84545;margin-bottom:6px;
   }
-  .download h3{font-size:16px;margin-bottom:6px}
-  .download p{color:var(--muted);font-size:13px}
-
-  /* Method */
-  .method{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:32px;
-  }
-  .method ol{padding-left:18px;color:var(--muted);font-size:15px}
-  .method li{margin-bottom:10px}
-  .method li strong{color:var(--ink)}
-  .stack{
-    background:var(--light);
-    border-radius:12px;
-    padding:24px;
-    align-self:start;
-  }
-  .stack-row{
-    display:flex;
-    justify-content:space-between;
-    padding:8px 0;
-    border-bottom:1px dashed var(--border);
-    font-size:14px;
-  }
-  .stack-row:last-child{border-bottom:none}
-  .stack-row span:first-child{font-weight:600}
-  .stack-row span:last-child{color:var(--muted)}
-
-  /* Footer */
-  footer{
-    padding:40px 0 60px;
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
-  }
-  footer a{color:var(--primary);text-decoration:none;font-weight:600}
-  footer a:hover{text-decoration:underline}
-
-  /* Mobile */
-  @media (max-width:720px){
-    header{padding:40px 0 32px}
-    h1{font-size:30px}
-    .kpis,.findings,.downloads,.method{grid-template-columns:1fr;gap:12px}
+  .download-title{font-size:15px;font-weight:600}
+  @media (max-width:680px){
+    .downloads{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
+<div class="container">
+  <h1>RetainIQ — Subscription Churn &amp; LTV Dashboard</h1>
+  <p class="sub">D2C furniture-rental case study. Source &amp; method on <a href="https://github.com/sakshirajpal17/RetainIQ" target="_blank" rel="noopener">GitHub</a>.</p>
 
-<header>
-  <div class="container">
-    <span class="tag">Customer Monetization · Strategy</span>
-    <h1>RetainIQ — Subscription Churn &amp; LTV Cohort Model</h1>
-    <p class="subtitle">A D2C furniture-rental case study. 12,000 simulated subscribers, 12 monthly cohorts (Jan&ndash;Dec 2024), observed through May 2026.</p>
-    <p class="quote">When do subscribers cancel — and can we predict who will, in time to do something about it?</p>
-    <div class="meta">
-      <span>Built in SQL + Python</span>
-      <span>·</span>
-      <a href="https://github.com/sakshirajpal17/RetainIQ" target="_blank" rel="noopener">View source on GitHub →</a>
-    </div>
+  <div class="dashboard">
+    <img src="outputs/Furlenco_Churn_Dashboard.png" alt="Furlenco Churn &amp; LTV Dashboard">
   </div>
-</header>
 
-<section>
-  <div class="container">
-    <h2>Headline metrics</h2>
-    <div class="kpis">
-      <div class="kpi kpi-1">
-        <div class="kpi-label">Active Base</div>
-        <div class="kpi-value">12,000</div>
-        <div class="kpi-sub">subscribers, 6 cities</div>
-      </div>
-      <div class="kpi kpi-2">
-        <div class="kpi-label">Steady Churn</div>
-        <div class="kpi-value">2.6%</div>
-        <div class="kpi-sub">monthly, M6&ndash;M12</div>
-      </div>
-      <div class="kpi kpi-3">
-        <div class="kpi-label">12-Month LTV</div>
-        <div class="kpi-value">₹17,155</div>
-        <div class="kpi-sub">ARPU ₹2,400/mo</div>
-      </div>
-      <div class="kpi kpi-4">
-        <div class="kpi-label">Model Precision</div>
-        <div class="kpi-value">78%</div>
-        <div class="kpi-sub">recall 67% · AUC 0.84</div>
-      </div>
-    </div>
+  <div class="downloads">
+    <a class="download" href="outputs/Furlenco_Churn_Dashboard.pdf" target="_blank">
+      <div class="download-type">PDF · DASHBOARD</div>
+      <div class="download-title">Full dashboard ↗</div>
+    </a>
+    <a class="download" href="outputs/Furlenco_Exec_Summary.pdf" target="_blank">
+      <div class="download-type">PDF · 1-PAGE</div>
+      <div class="download-title">Executive summary ↗</div>
+    </a>
+    <a class="download" href="outputs/Furlenco_Churn_Dashboard.png" target="_blank">
+      <div class="download-type">PNG · HIGH-RES</div>
+      <div class="download-title">Dashboard image ↗</div>
+    </a>
   </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Dashboard</h2>
-    <div class="dashboard-wrap">
-      <img src="outputs/Furlenco_Churn_Dashboard.png" alt="Furlenco Churn & LTV Dashboard">
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Key findings</h2>
-    <div class="findings">
-      <div class="finding">
-        <span class="finding-num">FINDING 01</span>
-        <h3>The M1&ndash;M2 cancellation cliff</h3>
-        <p>~18% of new acquisitions arrive already unhappy. They had a bad first impression, payment friction, or product mismatch — and they leave within 60 days. This is the single largest retention opportunity.</p>
-      </div>
-      <div class="finding">
-        <span class="finding-num">FINDING 02</span>
-        <h3>NPS is the dominant early-churn signal</h3>
-        <p>73% of month-2 churners are detractors (NPS ≤ 6) vs 25% of retained subscribers — a 3.0× higher detractor rate. The signal shows up at day 30, giving the team time to act.</p>
-      </div>
-      <div class="finding">
-        <span class="finding-num">FINDING 03</span>
-        <h3>A simple model captures it at scale</h3>
-        <p>Logistic-regression classifier on a day-30 snapshot predicts 90-day churn at 78% precision (67% recall, AUC 0.84). Top features: NPS, payment failures, swap requests. Flags ~29% of the base.</p>
-      </div>
-      <div class="finding">
-        <span class="finding-num">FINDING 04</span>
-        <h3>Channel quality varies sharply</h3>
-        <p>Referral and Direct subscribers have ~25% higher 12-month LTV than Meta Ads. Lower CAC too. There&rsquo;s a clear marketing-mix reallocation opportunity.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Recommendation</h2>
-    <div class="finding" style="grid-column:1/-1;border-left-color:var(--teal)">
-      <span class="finding-num" style="color:var(--teal)">MONTH-2 SAVE PLAN</span>
-      <h3>Trigger a loyalty credit + free Swap for subscribers flagged at day 30</h3>
-      <p>Mirrors the existing Swap / Relocation programs, applied earlier in tenure where the unit economics are most damaged. Run as A/B test: 50% flagged subscribers get the intervention, 50% control. Measure incremental retention and LTV over 90 days; scale if incremental LTV per saved subscriber &gt; intervention cost.</p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Downloads</h2>
-    <div class="downloads">
-      <a class="download" href="outputs/Furlenco_Churn_Dashboard.pdf" target="_blank">
-        <div class="download-type">PDF · 58 KB</div>
-        <h3>Full dashboard</h3>
-        <p>Landscape, BI-style, ready for screen-share or print.</p>
-      </a>
-      <a class="download" href="outputs/Furlenco_Exec_Summary.pdf" target="_blank">
-        <div class="download-type">PDF · 50 KB</div>
-        <h3>Executive summary</h3>
-        <p>1-page portrait. Findings + recommendations + method.</p>
-      </a>
-      <a class="download" href="outputs/Furlenco_Churn_Dashboard.png" target="_blank">
-        <div class="download-type">PNG · 449 KB</div>
-        <h3>Dashboard image</h3>
-        <p>High-resolution PNG for embeds and slides.</p>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Method &amp; stack</h2>
-    <div class="method">
-      <div>
-        <h3 style="margin-bottom:16px;font-size:16px">How it&rsquo;s built</h3>
-        <ol>
-          <li><strong>Data simulation.</strong> 12,000 subscribers with a latent satisfaction score driving both NPS and churn — the same way real customer behaviour works.</li>
-          <li><strong>Cohort retention.</strong> Per-cohort survival from acquisition month, observed through May 2026.</li>
-          <li><strong>LTV.</strong> Cumulative ARPU × retention, 18-month horizon, broken out by channel.</li>
-          <li><strong>Churn classifier.</strong> scikit-learn LogisticRegression on day-30 features; threshold tuned on the PR curve to hit 78% precision.</li>
-          <li><strong>Dashboard.</strong> Matplotlib / seaborn, BI-style layout, exported as PNG + PDF. Production deployment lifts directly into Power BI or Tableau against a live warehouse.</li>
-        </ol>
-      </div>
-      <div class="stack">
-        <h3 style="margin-bottom:12px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:1px">Stack</h3>
-        <div class="stack-row"><span>SQL</span><span>PostgreSQL flavour</span></div>
-        <div class="stack-row"><span>Python</span><span>3.11</span></div>
-        <div class="stack-row"><span>Data</span><span>pandas, numpy</span></div>
-        <div class="stack-row"><span>Modelling</span><span>scikit-learn</span></div>
-        <div class="stack-row"><span>Viz</span><span>matplotlib, seaborn</span></div>
-        <div class="stack-row"><span>Repo</span><span><a href="https://github.com/sakshirajpal17/RetainIQ" target="_blank" rel="noopener" style="color:var(--primary)">GitHub →</a></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <p>Built by <strong>Sakshi Rajpal</strong> · Source on <a href="https://github.com/sakshirajpal17/RetainIQ" target="_blank" rel="noopener">GitHub</a></p>
-  </div>
-</footer>
-
+</div>
 </body>
 </html>
