@@ -5,6 +5,7 @@ __pycache__/
 venv/
 .env
 .DS_Store
+~$*
 .vscode/
 .idea/
 _make_notebook.py
