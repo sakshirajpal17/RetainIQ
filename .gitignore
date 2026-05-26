@@ -9,4 +9,4 @@ venv/
 .idea/
 .claude/
 _make_notebook.py
-INTERVIEW_TALKING_POINTS.md
+HANDOFF.md
