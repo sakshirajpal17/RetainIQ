@@ -19,6 +19,18 @@ Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 simulated subsc
 - 🖼️ [**Dashboard image (PNG)**](outputs/Furlenco_Churn_Dashboard.png) — high-resolution
 - 📈 [**Model metrics**](outputs/model_metrics.txt) — precision / recall / AUC / feature coefficients
 
+### What the dashboard shows, panel by panel
+
+| Panel | What it answers |
+|---|---|
+| **4 KPI cards** (top) | The headline numbers at a glance: 12K active base, 2.6% steady-state monthly churn, ₹17,155 12-month LTV, 28% of base flagged at-risk. |
+| **Cohort retention heatmap** (middle-left) | Rows = signup month, columns = months since signup, cells = % still active. Green-to-red palette makes the M1–M2 cancellation cliff visually obvious. |
+| **LTV curve** (middle-right) | Cumulative revenue per subscriber over 18 months. Flattens past month 12 — that's the "stable value" point of the curve. |
+| **NPS by churn month** (bottom-left) | Boxplot of NPS scores split by when subscribers cancelled. Shows month-2 churners cluster at NPS 1–4 (red boxes) while retained subscribers cluster at NPS 7–9 (green box). |
+| **Churn drivers** (bottom-middle) | Standardised logistic-regression coefficients. Bars pointing right (red) push churn up; bars pointing left (green) protect against churn. NPS is the biggest single lever. |
+| **12-month LTV by channel** (bottom-right) | Acquisition-channel ranking by LTV. Direct and Referral lead; Meta Ads trails. Drives the marketing-mix reallocation recommendation. |
+| **Recommendation banner** (footer) | The Month-2 Save Plan: trigger a loyalty credit + free Swap when the model flags a subscriber at day 30. |
+
 ---
 
 ## What the project actually found

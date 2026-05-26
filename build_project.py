@@ -493,8 +493,8 @@ for patch, c in zip(bp["boxes"], colors_box):
     patch.set_facecolor(c)
     patch.set_alpha(0.7)
 ax_nps.set_title(
-    f"NPS by churn month  —  month-2 churners: {m2_detractor:.0f}% detractors  vs  retained {retained_detractor:.0f}%   ({detractor_ratio:.1f}x)",
-    fontsize=11, loc="left", pad=10,
+    f"NPS by churn month  —  M2 churners {m2_detractor:.0f}% detractors vs retained {retained_detractor:.0f}%  ({detractor_ratio:.1f}x)",
+    fontsize=10, loc="left", pad=10,
 )
 ax_nps.set_ylabel("NPS score (1–10)", fontsize=9)
 ax_nps.set_xlabel("Churned in month → / Retained", fontsize=9)
@@ -508,8 +508,8 @@ bar_colors = [C_PRIMARY if c > 0 else C_TEAL for c in sorted_feat.coef]
 ax_feat.barh(sorted_feat.pretty, sorted_feat.coef, color=bar_colors, alpha=0.85)
 ax_feat.axvline(0, color=C_INK, linewidth=0.6)
 ax_feat.set_title(
-    "Churn-driver coefficients  (standardised LogReg, + = pushes churn, − = protects)",
-    fontsize=11, loc="left", pad=10,
+    "Churn drivers  (LogReg coefficients · + pushes churn, − protects)",
+    fontsize=10, loc="left", pad=10,
 )
 ax_feat.tick_params(axis="y", labelsize=9)
 ax_feat.grid(True, axis="x", alpha=0.25, linewidth=0.6)
@@ -522,7 +522,7 @@ ax_chan.barh(chan_ltv_s.index.str.replace("_", " "), chan_ltv_s.values,
 for i, v in enumerate(chan_ltv_s.values):
     ax_chan.text(v + 200, i, f"INR {v:,.0f}",
                  va="center", fontsize=9, color=C_INK)
-ax_chan.set_title("12-month LTV by acquisition channel", fontsize=11, loc="left", pad=10)
+ax_chan.set_title("12-month LTV by acquisition channel", fontsize=10, loc="left", pad=10)
 ax_chan.set_xlim(0, chan_ltv_s.values.max() * 1.25)
 ax_chan.grid(True, axis="x", alpha=0.25, linewidth=0.6)
 ax_chan.xaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"{v/1000:.0f}K"))
