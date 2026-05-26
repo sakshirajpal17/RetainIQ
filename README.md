@@ -12,9 +12,12 @@ Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 simulated subsc
 
 ![Furlenco Churn & LTV Dashboard](outputs/Furlenco_Churn_Dashboard.png)
 
-You can also view the same thing as PDF:
-- `outputs/Furlenco_Churn_Dashboard.pdf` — the dashboard
-- `outputs/Furlenco_Exec_Summary.pdf` — a 1-page summary
+**👉 Open the outputs directly (no download needed):**
+
+- 📊 [**Full dashboard (PDF)**](outputs/Furlenco_Churn_Dashboard.pdf) — landscape, BI-style, screen-share ready
+- 📄 [**Executive summary (1-page PDF)**](outputs/Furlenco_Exec_Summary.pdf) — findings + recommendations + method
+- 🖼️ [**Dashboard image (PNG)**](outputs/Furlenco_Churn_Dashboard.png) — high-resolution
+- 📈 [**Model metrics**](outputs/model_metrics.txt) — precision / recall / AUC / feature coefficients
 
 ---
 
