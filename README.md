@@ -4,7 +4,7 @@ A small data project built around a simple question:
 
 > *On a furniture-rental subscription, when do customers cancel — and can we predict who will, in time to do something about it?*
 
-Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 simulated subscribers, 12 monthly cohorts (January to December 2024), tracked through May 2026.
+Built as a case study for **Furlenco** (Rental + UNLMTD). 12,000 simulated subscribers, 12 monthly cohorts (January to December 2024), tracked through May 2026. Analysis layer in **SQL + Python**; output rendered as a **BI-style dashboard** ready for Power BI / Tableau integration.
 
 ---
 
@@ -63,13 +63,14 @@ Subscribers from **Referral** and **Direct** stay much longer and are worth more
 ```
 RetainIQ/
 ├── README.md                       ← you are here
-├── build_project.py                ← the Python script that builds everything
+├── queries.sql                     ← SQL: cohort retention, LTV, at-risk scoring, segments
+├── build_project.py                ← Python: data, churn model, dashboard rendering
 ├── Furlenco_Churn_LTV.ipynb        ← same project as a notebook (for Google Colab)
 ├── requirements.txt
 ├── data/
 │   └── furlenco_subscribers.csv    ← the 12,000-row dataset
 └── outputs/
-    ├── Furlenco_Churn_Dashboard.png    ← the main dashboard
+    ├── Furlenco_Churn_Dashboard.png    ← BI-style dashboard (Power BI / Tableau ready)
     ├── Furlenco_Churn_Dashboard.pdf
     ├── Furlenco_Exec_Summary.pdf       ← 1-page summary
     └── model_metrics.txt               ← detailed model performance
@@ -89,7 +90,7 @@ Takes ~30 seconds. Re-creates the dataset, the model, the dashboard, and the PDF
 **Option B — Google Colab (browser, no install):**
 Upload `Furlenco_Churn_LTV.ipynb` to [colab.research.google.com](https://colab.research.google.com) and click *Runtime → Run all*.
 
-The project uses Python with `pandas`, `scikit-learn`, `matplotlib`, and `seaborn`.
+**Stack:** SQL (PostgreSQL-flavoured, in `queries.sql`) for the data layer; Python (`pandas`, `scikit-learn`, `matplotlib`, `seaborn`) for the model and dashboard rendering. The dashboard layout is BI-tool standard (KPI strip + heatmap + supporting charts + recommendation banner) and lifts directly into Power BI or Tableau against a live warehouse connection.
 
 ---
 
